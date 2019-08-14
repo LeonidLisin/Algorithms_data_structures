@@ -25,23 +25,26 @@ public class AdvancedArray<E extends Object & Comparable<? super E>> implements 
     @Override
     public boolean addByIndex(int index, E element) {
         boolean result = false;
-        if (index < size){
+        if (index < this.index){
             arr[index] = element;
             result =  true;
+            isSorted = false;
         }
-        isSorted = false;
         return result;
     }
 
     @Override
-    public void insert(int index, E element) {
-        if (index <= this.index){
+    public boolean insert(int index, E element) {
+        boolean result = false;
+        if (index < this.index){
             this.index++;
             checkFull();
             System.arraycopy(arr, index, arr, index + 1, this.index - index);
             arr[index] = element;
             isSorted = false;
+            result = true;
         }
+        return result;
     }
 
     @Override
@@ -50,20 +53,21 @@ public class AdvancedArray<E extends Object & Comparable<? super E>> implements 
         if (index < this.index){
             System.arraycopy(arr, index + 1, arr, index, this.index - index -1);
             arr[this.index--] = null;
-            return true;
+            result = true;
         }
-        return false;
+        return result;
     }
 
     @Override
     public boolean remove(E element) {
-        for (int i = 0; i < arr.length; i++) {
+        boolean result = false;
+        for (int i = 0; i < index; i++) {
             if (arr[i].equals(element)){
                 removeByIndex(i);
-                break;
+                result = true;
             }
         }
-        return false;
+        return result;
     }
 
     @Override
