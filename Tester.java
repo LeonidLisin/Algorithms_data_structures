@@ -1,123 +1,94 @@
-import org.junit.*;
+package Lesson3_DZ;
+
+import Lesson3_DZ.Flip.StringFlip;
+import Lesson3_DZ.Queue.*;
+import Lesson3_DZ.Stack.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 public class Tester {
-    private Array<Integer> arr, arr2;
 
+    private Stack<Integer> stack;
+    private Queue<Integer> queue;
+    private Queue<Integer> prQueue;
+    private Dequeue<Integer> dequeue;
+    private StringFlip flipper;
+
+    @SuppressWarnings("unchecked")
     @Before
     public void init(){
-        arr = new AdvancedArray(5);
-        arr2 = new AdvancedArray();
+        stack = new DoStack(3);
+        queue = new DoQueue(3);
+        prQueue = new PriorityQueue<>(3);
+        dequeue = new Dequeue(3);
+        flipper = new StringFlip();
     }
 
     @Test()
-    public void defaultSizeCreateTest() {
-        Assert.assertArrayEquals(arr2.getArray(), new Integer[]{});
+    public void stackTest(){
+        Assert.assertEquals(0, stack.getSize());
+        stack.push(2);
+        stack.push(3);
+        stack.push(5);
+        Assert.assertFalse(stack.push(55));
+        Assert.assertEquals(3, stack.getSize());
+        Assert.assertEquals(stack.peek(), Integer.valueOf(5));
+        Assert.assertEquals(stack.pop(), Integer.valueOf(5));
+        Assert.assertEquals(stack.peek(), Integer.valueOf(3));
     }
 
     @Test()
-    public void addTest(){
-        arr2.add(1);
-        Assert.assertArrayEquals(arr2.getArray(), new Integer[]{1});
+    public void queueTest(){
+        Assert.assertEquals(0, queue.getSize());
+        queue.insert(9);
+        queue.insert(19);
+        queue.insert(119);
+        Assert.assertEquals(queue.peek(), Integer.valueOf(9));
+        Assert.assertEquals(queue.getSize(), 3);
+        Assert.assertFalse(queue.insert(555));
+        Assert.assertEquals(queue.remove(), Integer.valueOf(9));
+        Assert.assertEquals(queue.remove(), Integer.valueOf(19));
+        Assert.assertEquals(queue.remove(), Integer.valueOf(119));
+        Assert.assertNull(queue.remove());
+    }
+
+    @Test
+    public void dequeueTest(){
+        dequeue.insertRight(1);
+        dequeue.insertRight(2);
+        dequeue.insertRight(3);
+
+        Assert.assertFalse(dequeue.insertLeft(3));
+        Assert.assertEquals(dequeue.getSize(), 3);
+        Assert.assertEquals(dequeue.peekLeft(), Integer.valueOf(1));
+        Assert.assertEquals(dequeue.removeLeft(), Integer.valueOf(1));
+        Assert.assertEquals(dequeue.peekRight(), Integer.valueOf(3));
+        Assert.assertEquals(dequeue.removeRight(), Integer.valueOf(3));
+        Assert.assertEquals(dequeue.removeLeft(), Integer.valueOf(2));
+        Assert.assertNull(dequeue.removeRight());
+        Assert.assertEquals(dequeue.getSize(), 0);
+
+        dequeue.insertLeft(3);
+        Assert.assertEquals(dequeue.removeRight(), Integer.valueOf(3));
     }
 
     @Test()
-    public void addTest1(){
-        arr.add(1);
-        arr.add(5);
-        arr.add(3);
-        arr.add(-1);
-        arr.add(0);
-        arr.add(4);
-        Assert.assertTrue(arr.addByIndex(5, 7));
-        Assert.assertFalse(arr.addByIndex(10, 7));
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{1, 5, 3, -1, 0, 7});
-        Assert.assertEquals(arr.getSize(), 6);
+    public void priorityQueueTest(){
+        prQueue.insert(2);
+        prQueue.insert(7);
+        prQueue.insert(9);
+        Assert.assertFalse(prQueue.insert(2));
+        Assert.assertEquals(prQueue.peek(), Integer.valueOf(2));
+        Assert.assertEquals(prQueue.remove(), Integer.valueOf(2));
+        Assert.assertEquals(prQueue.remove(), Integer.valueOf(7));
+        Assert.assertEquals(prQueue.remove(), Integer.valueOf(9));
+        Assert.assertNull(prQueue.remove());
     }
 
     @Test()
-    public void removeByIndexTest(){
-        arr.add(1);
-        arr.add(5);
-        arr.add(3);
-        arr.add(-1);
-        arr.add(0);
-        arr.add(4);
-        Assert.assertTrue(arr.removeByIndex(3));
-        Assert.assertTrue(arr.removeByIndex(4));
-        Assert.assertTrue(arr.removeByIndex(0));
-        Assert.assertFalse(arr.removeByIndex(5));
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{5, 3, 0});
-        Assert.assertEquals(arr.getSize(), 3);
+    public void stringFlipTest(){
+        Assert.assertEquals(flipper.flip("123"), new StringBuilder("321"));
     }
 
-    @Test()
-    public void removeTest(){
-        arr.add(1);
-        arr.add(5);
-        arr.add(3);
-        arr.add(-1);
-        arr.add(0);
-        arr.add(4);
-        Assert.assertTrue(arr.remove(-1));
-        Assert.assertFalse(arr.remove(99));
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{1, 5, 3, 0, 4});
-        Assert.assertEquals(arr.getSize(), 5);
-    }
-
-    @Test()
-    public void insertTest(){
-        arr.add(1);
-        arr.add(5);
-        Assert.assertTrue(arr.insert(1, 99));
-        Assert.assertFalse(arr.insert(3, 999));
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{1, 99, 5});
-    }
-
-    @Test()
-    public void getTest(){
-        arr.add(1);
-        Assert.assertEquals(arr.get(0), new Integer(1));
-    }
-
-    @Test()
-    public void containsTest(){
-        arr.add(1);
-        arr.add(5);
-        Assert.assertTrue(arr.insert(1, 99));
-        Assert.assertTrue(arr.contains(5));
-        Assert.assertFalse(arr.contains(2));
-    }
-
-    @Test()
-    public void sortBubbleTest(){
-        arr.add(3);
-        arr.add(-1);
-        arr.add(3);
-        arr.add(2);
-        arr.add(4);
-        arr.sort(SortingMethod.BUBBLE);
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{-1, 2, 3, 3, 4});
-    }
-
-   @Test()
-    public void sortInsertTest(){
-        arr.add(3);
-        arr.add(-1);
-        arr.add(3);
-        arr.add(2);
-        arr.add(4);
-        arr.sort(SortingMethod.INSERT);
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{-1, 2, 3, 3, 4});
-    }
-
-    @Test()
-    public void sortSelectTest(){
-        arr.add(3);
-        arr.add(-1);
-        arr.add(3);
-        arr.add(2);
-        arr.add(4);
-        arr.sort(SortingMethod.SELECT);
-        Assert.assertArrayEquals(arr.getArray(), new Integer[]{-1, 2, 3, 3, 4});
-    }
 }
