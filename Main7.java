@@ -6,41 +6,41 @@ public class Main7 {
 
     private static void testGraph() {
         Graph graph = new Graph(12);
-        graph.addVertex("Москва");
-        graph.addVertex("Тула");
-        graph.addVertex("Рязань");
-        graph.addVertex("Калуга");
-        graph.addVertex("Липецк");
-        graph.addVertex("Тамбов");
-        graph.addVertex("Орел");
-        graph.addVertex("Саратов");
-        graph.addVertex("Курск");
-        graph.addVertex("Воронеж");
-        graph.addVertex("Владивосток");
-        graph.addVertex("Пекин");
+        graph.addVertex("Moscow");
+        graph.addVertex("Tula");
+        graph.addVertex("Ryazan");
+        graph.addVertex("Kaluga");
+        graph.addVertex("Lipetzk");
+        graph.addVertex("Tambov");
+        graph.addVertex("Orel");
+        graph.addVertex("Saratov");
+        graph.addVertex("Kursk");
+        graph.addVertex("Voronezh");
+        graph.addVertex("Vladivostok");
+        graph.addVertex("Beijing");
 
-        graph.addEdges("Москва",
-                "Тула",
-                "Рязань",
-                "Калуга");
+        graph.addEdges("Moscow",
+                "Tula",
+                "Ryazan",
+                "Kaluga");
 
-        graph.addEdge("Тула", "Липецк");
-        graph.addEdge("Липецк", "Воронеж");
+        graph.addEdge("Tula", "Lipetzk");
+        graph.addEdge("Lipetzk", "Voronezh");
 
-        graph.addEdge("Рязань", "Тамбов");
-        graph.addEdge("Тамбов", "Саратов");
-        graph.addEdge("Саратов", "Воронеж");
+        graph.addEdge("Ryazan", "Tambov");
+        graph.addEdge("Tambov", "Saratov");
+        graph.addEdge("Saratov", "Voronezh");
 
-        graph.addEdge("Калуга", "Орел");
-        graph.addEdge("Орел", "Курск");
-        graph.addEdge("Курск", "Воронеж");
+        graph.addEdge("Kaluga", "Orel");
+        graph.addEdge("Orel", "Kursk");
+        graph.addEdge("Kursk", "Voronezh");
 
-        graph.addEdge("Владивосток", "Пекин");
+        graph.addEdge("Vladivostok", "Beijing");
 
-        graph.findShortestWay("Курск", "Саратов");
-        graph.findShortestWay("Москва", "Воронеж");
-        graph.findShortestWay("Москва", "Пекин");
-        graph.findShortestWay("Москва", "Москва");
+        graph.findShortestWay("Kursk", "Saratov");
+        graph.findShortestWay("Moscow", "Voronezh");
+        graph.findShortestWay("Moscow", "Beijing");
+        graph.findShortestWay("Moscow", "Moscow");
     }
 
 }
